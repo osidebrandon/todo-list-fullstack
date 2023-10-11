@@ -76,6 +76,7 @@ type Props = {
   isEditing: boolean;
   setIsEditing: (newName: string) => void;
   onChecked: (id: string) => void;
+  onDelete: () => void;
 };
 export const Todo = ({
   id,
@@ -84,6 +85,7 @@ export const Todo = ({
   isEditing,
   setIsEditing,
   onChecked,
+  onDelete,
 }: Props) => {
   const [updatedName, setUpdatedName] = useState<string>(name);
 
@@ -119,7 +121,7 @@ export const Todo = ({
               fontSize="medium"
             />
           )}
-          <TrashIcon color="error" fontSize="medium" />
+          <TrashIcon onClick={onDelete} color="error" fontSize="medium" />
         </TodoSideContainer>
       </Container>
     </Item>

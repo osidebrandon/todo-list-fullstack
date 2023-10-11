@@ -23,3 +23,9 @@ export const updateTodo = async (id: string, todo: Todo): Promise<Todo> => {
   const updated = response.data as Todo;
   return updated;
 };
+
+export const deleteTodo = async (id: string): Promise<boolean> => {
+  const url = `${BASE_URL}/api/todos/${id}`;
+  const response = await axios.delete(url);
+  return response.status === 200;
+};

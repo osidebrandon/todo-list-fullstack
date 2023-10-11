@@ -51,10 +51,11 @@ const updateTodo = async (request: Request, response: Response, next: any) => {
     response.json(updatedTodo);
 }
 
-const deleteTodo = (request: Request, response: Response, next: any) => {
-    
+const deleteTodo = async (request: Request, response: Response, next: any) => {
+    const oId = new ObjectId(request.params.id);
+    await database.deleteDocument(collection, oId);
+    response.json({ success: true });
 }
-
 
 export default {
     getAllTodos,

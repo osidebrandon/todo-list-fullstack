@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { AddForm } from "./components/AddForm";
 import { styled } from "styled-components";
 import { Todo as TodoType } from "./types";
-import { createTodo, getAllTodos, updateTodo } from "./utils/service";
+import { createTodo, deleteTodo, getAllTodos, updateTodo } from "./utils/service";
 
 const Header = styled.div`
   position: sticky;
@@ -39,6 +39,16 @@ const App = () => {
     }
   };
 
+  const deleteItem = async (id: string) => {
+    const success = await deleteTodo(id);
+    if (!success) return;
+    const found = todos.filter((todo) => todo._id === id)[0];
+    const index = todos.indexOf(found);
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  }
+
   const setIsEditing = async (todo: TodoType, updatedName: string) => {
     if (editingTodo) {
       const newTodo: TodoType = {
@@ -55,8 +65,8 @@ const App = () => {
   const updateTodoList = async (newTodo: TodoType) => {
     const found = todos.filter((todo) => todo._id === newTodo._id)[0];
     const updatedTodo = await updateTodo(newTodo._id, newTodo);
-    const newTodos = [...todos];
     const index = todos.indexOf(found);
+    const newTodos = [...todos];
     newTodos[index] = updatedTodo;
     setTodos(newTodos);
   };
@@ -95,6 +105,7 @@ const App = () => {
               setIsEditing={(updatedName) => setIsEditing(todo, updatedName)}
               completed={todo.isCompleted}
               onChecked={checkTodo}
+              onDelete={() => deleteItem(todo._id)}
             />
           ))}
         </List>

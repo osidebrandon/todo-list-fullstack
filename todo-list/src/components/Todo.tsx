@@ -1,8 +1,8 @@
 import { Checkbox, ListItem, TextField, Typography } from "@mui/material";
 import { styled } from "styled-components";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import { useState } from "react";
 
 const Item = styled(ListItem)`
@@ -15,19 +15,19 @@ const Container = styled.div`
   align-items: center;
 `;
 const TodoContent = styled.div`
-    flex: 1;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 `;
 const Input = styled(TextField)`
-    flex: 1;
+  flex: 1;
 `;
 const TodoSideContainer = styled.div`
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const EditIcon = styled(DriveFileRenameOutlineIcon)`
   cursor: pointer;
@@ -77,35 +77,49 @@ type Props = {
   setIsEditing: (newName: string) => void;
   onChecked: (id: string) => void;
 };
-export const Todo = ({ id, name, completed, isEditing, setIsEditing, onChecked }: Props) => {
-
-    const [updatedName, setUpdatedName] = useState<string>(name);
+export const Todo = ({
+  id,
+  name,
+  completed,
+  isEditing,
+  setIsEditing,
+  onChecked,
+}: Props) => {
+  const [updatedName, setUpdatedName] = useState<string>(name);
 
   return (
     <Item>
       <Container>
         <TodoSideContainer>
-            <Checkbox checked={completed} onChange={() => onChecked(id)} />
+          <Checkbox checked={completed} onChange={() => onChecked(id)} />
         </TodoSideContainer>
         <TodoContent>
-            {isEditing ? (
-                <Input
-                    value={updatedName}
-                    multiline={true}
-                    variant="standard"
-                    onChange={(event) => setUpdatedName(event.target.value)}
-                />
-            ) : (
-                <Typography>{name}</Typography>
-            )}
+          {isEditing ? (
+            <Input
+              value={updatedName}
+              multiline={true}
+              variant="standard"
+              onChange={(event) => setUpdatedName(event.target.value)}
+            />
+          ) : (
+            <Typography>{name}</Typography>
+          )}
         </TodoContent>
         <TodoSideContainer>
-            {isEditing ? (
-                <FinishIcon onClick={() => setIsEditing(updatedName)} color="success" fontSize="medium" />
-            ) : (
-                <EditIcon onClick={() => setIsEditing(updatedName)} color="primary" fontSize="medium" />
-            )}
-            <TrashIcon color="error" fontSize="medium" />
+          {isEditing ? (
+            <FinishIcon
+              onClick={() => setIsEditing(updatedName)}
+              color="success"
+              fontSize="medium"
+            />
+          ) : (
+            <EditIcon
+              onClick={() => setIsEditing(updatedName)}
+              color="primary"
+              fontSize="medium"
+            />
+          )}
+          <TrashIcon color="error" fontSize="medium" />
         </TodoSideContainer>
       </Container>
     </Item>
